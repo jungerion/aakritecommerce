@@ -10,9 +10,9 @@ const Login = ()=> {
       body: JSON.stringify(values)
   };
   const res =  await fetch('http://localhost:3001/login', requestOptions)
-  const data = await res.json()
+  const data = await res.json()    // dispatch update
   if(data.isLoggedIn){
-  
+
   }
 
    }
