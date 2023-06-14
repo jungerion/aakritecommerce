@@ -9,6 +9,7 @@ const UserSlice = createSlice({
   initialState,
   reducers: {
     changeToken: (state, actions) => {
+      console.log(actions)
       
     }
   }
