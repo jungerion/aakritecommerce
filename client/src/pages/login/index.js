@@ -1,11 +1,16 @@
 import { Formik, Form, Field } from 'formik';
 import Link from 'next/link';
-import { changeToken } from '@/redux/reducers/userSlice';
-import { useDispatch } from 'react-redux';
-// import from nextjs site
+import {changeToken} from '../../redux/reducers/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router'
+import {useState} from 'react'
+
 
 const Login = ()=> {
-  const dispatch= useDispatch()
+  const router = useRouter()
+  const [error, setError]=useState('')
+  const {token} = useSelector(state=>state.user)
+  const dispatch = useDispatch()
    const triggerLogin = async(values)=>{
     const requestOptions = {
       method: 'POST',
@@ -13,14 +18,20 @@ const Login = ()=> {
       body: JSON.stringify(values)
   };
   const res =  await fetch('http://localhost:3001/login', requestOptions)
-  const data = await res.json()    // dispatch update
-   dispatch(changeToken(data))
+  const data = await res.json()
+  if (data.isLoggedIn){
+  dispatch (changeToken(data))
+  // router.push('/users')
+}else{
+  setError(data.msg)
+}
+
 
    }
-
     return (
         <div>
-          <h3>Sign In   To Your Account </h3>
+          {token}
+          <h3>Sign In To Your Account </h3>
        <Formik
           initialValues={{
             phoneNumber:'',
@@ -44,7 +55,7 @@ const Login = ()=> {
                 <div>{errors.password}</div>
               ) : null}
               <br/>
-
+              <span> {error}</span>
               <button type="submit">Submit</button>
               <br/>
               <small>Don't have an account yet ?</small>

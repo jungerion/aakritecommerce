@@ -1,9 +1,11 @@
+import BasicMenu from '@/components/dropDownmenu'
 import React from 'react'
 
-const index = () => {
+const Users = () => {
   return (
-    <div>index</div>
+    <div><BasicMenu/></div>
+    
   )
 }
 
-export default index
+export default Users
